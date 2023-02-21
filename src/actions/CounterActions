@@ -1,0 +1,17 @@
+export const addNumber=(value)=>{
+
+    return {
+        type:"add_count",
+         value
+    }
+
+} 
+
+export const subNumber=(value)=>{
+
+    return {
+        type:"sub_count",
+         value
+    }
+
+} 

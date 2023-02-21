@@ -1,0 +1,25 @@
+const FETCH_THUNK_LOADING = "FETCH_THUNK_LOADING";
+const FETCH_THUNK_SUCCESS = "FETCH_THUNK_SUCCESS";
+const FETCH_THUNK_ERROR = "FETCH_THUNK_ERROR";
+
+export default function Post(state={
+    isLoading:false,
+    error:false,
+    errorMessage:"",
+    result:[]
+
+},action){
+
+    switch(action.type){
+        case FETCH_THUNK_LOADING:
+            return {...state,isLoading:true};
+        case FETCH_THUNK_SUCCESS:
+            return {...state,result:action.payload,isLoading:false,isERROR:false};
+        case FETCH_THUNK_ERROR:
+            return {...state,isLoading:false,error:true};
+        default:
+            return state;
+            
+    }
+
+}

@@ -1,0 +1,36 @@
+
+.flex-direction{
+    position: relative;
+    border: 1px solid red;
+
+}
+
+.row, .row-reverse, .column,.column-reverse{
+    display:flex;
+    margin-top:5px;
+
+}
+
+.row{
+    flex-direction: row;
+}
+
+.row-reverse{
+    flex-direction: row-reverse;
+}
+.column{
+    flex-direction: column;
+}
+.column-reverse{
+    flex-direction: column-reverse;
+    left:6rem;
+    position: absolute;
+    top:11rem;    
+}
+
+.row div, .row-reverse div,.column div,.column-reverse div{
+    width: 5rem;
+    height: 5rem;
+    border: 1px solid blue;
+}
+

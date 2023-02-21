@@ -1,0 +1,51 @@
+
+const FETCH_THUNK_LOADING = "FETCH_THUNK_LOADING";
+const FETCH_THUNK_SUCCESS = "FETCH_THUNK_SUCCESS";
+const FETCH_THUNK_ERROR = "FETCH_THUNK_ERROR";
+const startRequest=(value)=>{
+
+    return {
+        type:FETCH_THUNK_LOADING,
+        payload:value
+    }
+
+} 
+
+ const receiveRequest=(value)=>{
+    return {
+        type:FETCH_THUNK_SUCCESS,
+        payload:value
+    }
+} 
+
+
+const send = (number) => {
+    const delay = (time) => {
+      return (data) => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve(data)
+          }, time);
+        });
+      }
+    };
+    return new Promise((resolve, reject) => {
+      resolve(Array.from({ length: number }, () => Math.random()));
+    }).then(delay(4000));
+  }
+
+
+export const fetchPosts = (number)=>{
+
+    return (dispatch,getState)=>{
+        console.log("getState",getState());
+        dispatch(startRequest(""));
+        send(number).then(data => {
+            dispatch(receiveRequest(data));
+
+
+    })
+}
+
+}
+

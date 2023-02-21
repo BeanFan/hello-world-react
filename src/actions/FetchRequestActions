@@ -1,0 +1,20 @@
+
+const FETCH_LOADING = "FETCH_LOADING";
+const FETCH_SUCCESS = "FETCH_SUCCESS";
+const FETCH_ERROR = "FETCH_ERROR";
+export const startRequest=(value)=>{
+
+    return {
+        type:FETCH_LOADING,
+        value
+    }
+
+} 
+
+export const receiveRequest=(value)=>{
+    return {
+        type:FETCH_SUCCESS,
+        value
+    }
+} 
+
