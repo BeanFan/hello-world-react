@@ -6,8 +6,10 @@ const path = require("path");
 
 const isExcludeModule = (modulePath)=>{
     const isNodeModules = /node_modules/.test(modulePath);
-    const isNotMyModule = !/node_modules\/sub-inject-reducer/.test(modulePath);
-    // console.log(isNodeModules && isNotMyModule , modulePath);
+    const isNotMyModule = !/sub-inject-reducer/.test(modulePath);
+    if(!isNodeModules){
+        console.log(modulePath,"-------");
+    }
     return isNodeModules && isNotMyModule;
 
 }
@@ -69,7 +71,12 @@ module.exports = {
     devtool:'source-map',
     devServer:{ 
         port:9000,
-    }
+    },
+    snapshot: {
+        managedPaths: [
+          /^(.+?[\\/]node_modules[\\/](?!(sub-inject-reducer))(@.+?[\\/])?.+?)[\\/]/,
+        ],
+      },
     // watchOptions: {
     //     ignored: /node_modules([\\]+|\/)+(?!x-sub-inject)/
     //  },

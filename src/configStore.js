@@ -27,7 +27,7 @@ const  configStoreWithInject = ()=>{
       store.asyncReducers[key] = asyncReducer
       store.replaceReducer(createReducer(store.asyncReducers));
     }else{
-      console.error(`reduer {key} has been feined `);
+      console.error(`reduer ${key} has been feined `);
     } 
   }
 
