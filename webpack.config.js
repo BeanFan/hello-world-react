@@ -3,9 +3,17 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const cssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin")
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require("path");
+
+const isExcludeModule = (modulePath)=>{
+    const isNodeModules = /node_modules/.test(modulePath);
+    const isNotMyModule = !/node_modules\/sub-inject-reducer/.test(modulePath);
+    // console.log(isNodeModules && isNotMyModule , modulePath);
+    return isNodeModules && isNotMyModule;
+
+}
 module.exports = {
     mode: "development",
-    entry: path.resolve(__dirname, "src/configStore.js"),
+    entry: path.resolve(__dirname, "src/index.js"),
     output: {
         clean:true,
         filename: "[name][hash].js",
@@ -16,8 +24,8 @@ module.exports = {
         rules: [
             {
                 test: /\.js/,
-                exclude: /node-modules/,
-                    loader: "babel-loader"
+                exclude: isExcludeModule,
+                loader: "babel-loader"
             },
             {
                 test:/\.css/,
@@ -37,13 +45,15 @@ module.exports = {
         // minsize:60000,
         splitChunks:{
             cacheGroups: {
+               
                 commons: {
-                  test: /[\\/]node_modules[\\/]/,
+                //   test: /[\\/]node_modules[\\/]/,
+                  test:isExcludeModule,  
                   name:"vendor",  
                   // cacheGroupKey here is `commons` as the key of the cacheGroup
                   chunks: 'all',
                 },
-              },
+              },    
         }
     },
     plugins: [
@@ -52,13 +62,16 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({ // build css to 1 separated css file, need add config to modules>rules>loader or use
             filename:"[name][hash].css"
-        }),
+        })//,
         // new BundleAnalyzerPlugin()
        
     ],
     devtool:'source-map',
-    devServer:{
+    devServer:{ 
         port:9000,
     }
+    // watchOptions: {
+    //     ignored: /node_modules([\\]+|\/)+(?!x-sub-inject)/
+    //  },
 
 }

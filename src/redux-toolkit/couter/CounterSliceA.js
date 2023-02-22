@@ -10,7 +10,7 @@ const counterSliceA = createSlice({
         },
         add5(state,action){
             return state+5;
-        }
+        },
     },
     extraReducers:{
         [addTwo](state,action){
