@@ -23,10 +23,12 @@ const  configStoreWithInject = ()=>{
 
   store.asyncReducers = {};
   store.injectReducer = (key,asyncReducer)=>{
+    console.log("inject again");
     if(!store.asyncReducers[key]){
       store.asyncReducers[key] = asyncReducer
       store.replaceReducer(createReducer(store.asyncReducers));
     }else{
+
       console.error(`reduer ${key} has been feined `);
     } 
   }

@@ -3,6 +3,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const cssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin")
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require("path");
+const { dirname } = require("path");
+const { getMaxListeners } = require("process");
+const fs = require("fs");
 
 const isExcludeModule = (modulePath)=>{
     const isNodeModules = /node_modules/.test(modulePath);
@@ -13,7 +16,8 @@ const isExcludeModule = (modulePath)=>{
     return isNodeModules && isNotMyModule;
 
 }
-module.exports = {
+
+const webpackConfig  = {
     mode: "development",
     entry: path.resolve(__dirname, "src/index.js"),
     output: {
@@ -76,9 +80,23 @@ module.exports = {
         managedPaths: [
           /^(.+?[\\/]node_modules[\\/](?!(sub-inject-reducer))(@.+?[\\/])?.+?)[\\/]/,
         ],
-      },
-    // watchOptions: {
-    //     ignored: /node_modules([\\]+|\/)+(?!x-sub-inject)/
-    //  },
+    },
+    resolve:{
+        modules:[path.resolve(__dirname,"dev_modules"),"node_modules"],
+    },
+    watchOptions: {
+        ignored: /node_modules([\\]+|\/)+(?!x-sub-inject)/
+    },
 
 }
+
+
+// function getWebpackAlias(){
+    if(fs.existsSync("./dev_mdoules")){
+        webpackConfig.resolve.alias=fs.readdirSync("./dev_modules");
+    }
+// }
+
+
+console.log("-----------",webpackConfig.resolve.alias);
+module.exports = webpackConfig;

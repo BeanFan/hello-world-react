@@ -3,9 +3,9 @@ import { add as addA, add5 } from "../redux-toolkit/couter/CounterSliceA";
 import React,{Suspense}from "react";
 import { HashRouter,Link,Route,Routes } from "react-router-dom";
 import { connect } from "react-redux";
-import LazyLoadWithReducer from "../components/LazyLoadWithReducer";
+// import LazyLoadWithReducer from "../components/LazyLoadWithReducer";
 import {store} from "../configStore"
-
+import DaymanicInject from "sub-inject-reducer";
   
 const mapState = state => state;
 const actionCreators = {
@@ -16,6 +16,16 @@ const actionCreators = {
   fetchRandomNumbers,
   fetchRequest
 };
+
+const LayLoadComponent =  React.lazy(()=>{
+  return import("sub-inject-reducer").then((lazy)=>{
+      return  lazy.default(store.injectReducer);
+    }
+  )
+
+});
+
+// const params = useParams();
 
 function App2(props) {
 
@@ -53,7 +63,11 @@ function App2(props) {
 
 
     <Routes>
-       <Route path="hello/:name" element={<LazyLoadWithReducer />} >
+       <Route path="hello/:name" element={<div>
+        <Suspense fallback={<div>loading</div>}>
+            <LayLoadComponent />
+         </Suspense>
+        </div>} >
        </Route>
     </Routes>
    
