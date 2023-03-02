@@ -51,7 +51,10 @@ const webpackConfig  = {
         // minsize:60000,
         splitChunks:{
             cacheGroups: {
-               
+                // extractCSS:{
+                //      test:isExcludeModule,
+                //      name:"main"
+                // },
                 commons: {
                 //   test: /[\\/]node_modules[\\/]/,
                   test:isExcludeModule,  
@@ -81,15 +84,15 @@ const webpackConfig  = {
     //       /^(.+?[\\/]node_modules[\\/](?!(sub-inject-reducer))(@.+?[\\/])?.+?)[\\/]/,
     //     ], // hot load matched path in node_modules
     // },
-    // resolve:{
-    //     modules:[path.resolve(__dirname,"dev_modules"),"node_modules"],
-    //     // add other modules path, you can add this config to replace the repos in node_modules by add it in dev_modules
-    // },
+    resolve:{
+        modules:[path.resolve(__dirname,"dev_modules"),"node_modules"],
+        // add other modules path, you can add this config to replace the repos in node_modules by add it in dev_modules
+    },
     
     watchOptions: {
         // ignored:  /^(.+?[\\/]node_modules[\\/](?!(sub-inject-reducer))(@.+?[\\/])?.+?)[\\/]/, // not work with regExp
         
-        ignored:  /^(.+?[\\/]node_modules[\\/](?!(sub-inject-reducer))(@.+?[\\/])?.+?)[\\/]/,
+        // ignored:  /^(.+?[\\/]node_modules[\\/](?!(sub-inject-reducer))(@.+?[\\/])?.+?)[\\/]/,
         
     },                                    
 

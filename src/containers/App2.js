@@ -5,6 +5,7 @@ import { HashRouter,Link,Route,Routes } from "react-router-dom";
 import { connect } from "react-redux";
 import {store} from "../configStore"
 import FlexDirection from "../components/FlexDirection";
+import FlexFlow from "../components/FLexFlow";
 const mapState = state => state;
 const actionCreators = {
   addA,
@@ -65,7 +66,7 @@ function App2(props) {
 
       <ul>
         <li>Flex Direction<FlexDirection /></li>
-
+        <li>Flex FlexFlow <FlexFlow /></li>
       </ul>
 
     <Routes>
