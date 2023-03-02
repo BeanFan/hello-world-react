@@ -3,10 +3,8 @@ import { add as addA, add5 } from "../redux-toolkit/couter/CounterSliceA";
 import React,{Suspense}from "react";
 import { HashRouter,Link,Route,Routes } from "react-router-dom";
 import { connect } from "react-redux";
-// import LazyLoadWithReducer from "../components/LazyLoadWithReducer";
 import {store} from "../configStore"
-import DaymanicInject from "sub-inject-reducer";
-  
+import FlexDirection from "../components/FlexDirection";
 const mapState = state => state;
 const actionCreators = {
   addA,
@@ -18,7 +16,8 @@ const actionCreators = {
 };
 
 const LayLoadComponent =  React.lazy(()=>{
-  return import("sub-inject-reducer").then((lazy)=>{
+  return import(/* webpackChunkName:'sub_bean_inject_reducer' */"sub-inject-reducer")
+  .then((lazy)=>{
       return  lazy.default(store.injectReducer);
     }
   )
@@ -59,8 +58,15 @@ function App2(props) {
         <li>
           <b>loading Number </b>: {loading?<span>loading</span>:""}
         </li>
+
+
       </ul>
 
+
+      <ul>
+        <li>Flex Direction<FlexDirection /></li>
+
+      </ul>
 
     <Routes>
        <Route path="hello/:name" element={<div>
@@ -69,6 +75,7 @@ function App2(props) {
          </Suspense>
         </div>} >
        </Route>
+       
     </Routes>
    
       <div>

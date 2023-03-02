@@ -10,8 +10,8 @@ const fs = require("fs");
 const isExcludeModule = (modulePath)=>{
     const isNodeModules = /node_modules/.test(modulePath);
     const isNotMyModule = !/sub-inject-reducer/.test(modulePath);
-    if(!isNodeModules){
-        console.log(modulePath,"-------");
+    if(!isNotMyModule){
+        // console.log(modulePath,"-------");
     }
     return isNodeModules && isNotMyModule;
 
@@ -76,27 +76,44 @@ const webpackConfig  = {
     devServer:{ 
         port:9000,
     },
-    snapshot: {
-        managedPaths: [
-          /^(.+?[\\/]node_modules[\\/](?!(sub-inject-reducer))(@.+?[\\/])?.+?)[\\/]/,
-        ],
-    },
-    resolve:{
-        modules:[path.resolve(__dirname,"dev_modules"),"node_modules"],
-    },
+    // snapshot: {
+    //     managedPaths: [
+    //       /^(.+?[\\/]node_modules[\\/](?!(sub-inject-reducer))(@.+?[\\/])?.+?)[\\/]/,
+    //     ], // hot load matched path in node_modules
+    // },
+    // resolve:{
+    //     modules:[path.resolve(__dirname,"dev_modules"),"node_modules"],
+    //     // add other modules path, you can add this config to replace the repos in node_modules by add it in dev_modules
+    // },
+    
     watchOptions: {
-        ignored: /node_modules([\\]+|\/)+(?!x-sub-inject)/
-    },
+        // ignored:  /^(.+?[\\/]node_modules[\\/](?!(sub-inject-reducer))(@.+?[\\/])?.+?)[\\/]/, // not work with regExp
+        
+        ignored:  /^(.+?[\\/]node_modules[\\/](?!(sub-inject-reducer))(@.+?[\\/])?.+?)[\\/]/,
+        
+    },                                    
 
 }
 
+// an Option replace default path  for example you can use this replace some dependency ,
+function getWebpackAlias(){
+    if(fs.existsSync(path.resolve(__dirname,"dev_modules"))){
+        if(!webpackConfig.resolve)
+        {webpackConfig.resolve={};
+        }
+        const DevModules =fs.readdirSync(path.resolve(__dirname,"dev_modules"));
+        console.log(DevModules);
+        webpackConfig.resolve.alias = DevModules.reduce((result,current)=>{
+            // console.log(item,lastValue);
+             return {
+                ...result, 
+                [current]:path.resolve(__dirname,`dev_modules/${current}`)       
+            }
 
-// function getWebpackAlias(){
-    if(fs.existsSync("./dev_mdoules")){
-        webpackConfig.resolve.alias=fs.readdirSync("./dev_modules");
+        },{}); 
     }
-// }
+    // }
+}
 
-
-console.log("-----------",webpackConfig.resolve.alias);
+// getWebpackAlias();
 module.exports = webpackConfig;

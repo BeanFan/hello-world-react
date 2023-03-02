@@ -39,6 +39,6 @@
     "redux-thunk": "^2.4.2",
     "redux-toolkit": "^1.1.2",
     "styled-components": "^5.3.6",
-    "sub-inject-reducer":"git://github.com/BeanFan/sub-inject-reducer.git#master"
+    "sub-inject-reducer":"git://github.com/BeanFan/sub-inject-reducer.git#develop"
   }
 }
